@@ -5,6 +5,7 @@ import { View } from "react-native";
 import Tag from "./Tag";
 import Input from "./Input";
 import styles from "./styles";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 class Tags extends React.Component {
 
@@ -47,18 +48,36 @@ class Tags extends React.Component {
       !(this.state.tags.indexOf(text.slice(0, -1).trim()) > -1)
     ) {
       this.addTag(text.slice(0, -1));
+      console.log('Added on changetext', text.slice(0,-1))
     } else {
       this.setState({ text });
     }
   };
-
   onSubmitEditing = () => {
+    console.log('Submit editing')
     if (!this.props.createTagOnReturn) {
       return;
     }
-    this.addTag(this.state.text);
+    if(this.state.text.length>0){
+      this.addTag(this.state.text);
+      console.log('Added on submit editing', this.state.text);
+    }
+    
   };
-
+  onBlur = () => {
+    var tbval = this.state.text;
+    console.log('Firing blur', tbval);
+    if (tbval.length === 0) {
+      this.showLastTag();
+    }
+    else if(tbval.trim().length>0)
+    {
+      console.log('Text length', tbval.length)
+      this.addTag(tbval);
+      console.log('Added on blur', tbval)
+      this.setState({text: ''})
+  }
+}
   render() {
 
     const {
@@ -116,6 +135,7 @@ class Tags extends React.Component {
             value={this.state.text}
             onChangeText={this.onChangeText}
             onSubmitEditing={this.onSubmitEditing}
+            onBlur={this.onBlur}
             {...this.props}
           />
         }

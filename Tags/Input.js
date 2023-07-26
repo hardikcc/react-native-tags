@@ -11,7 +11,8 @@ const Input = (props) => {
     onSubmitEditing,
     inputStyle,
     inputContainerStyle,
-    textInputProps
+    textInputProps,
+    onBlur
   } = props;
 
   return (
@@ -22,7 +23,9 @@ const Input = (props) => {
         value={value}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
+        onBlur={onBlur}
         underlineColorAndroid="transparent"
+        // returnKeyType='next'
       />
     </View>
   );
